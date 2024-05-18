@@ -20,7 +20,7 @@ resource "aws_instance" "web1" {
     Name = "web1_instance"
   }
 
-  user_data = templatefile("./install.sh", {db_endpoint = data.aws_db_instance.project_db.endpoint})
+  user_data = templatefile("${path.module}/install.sh", {db_endpoint = data.aws_db_instance.project_db.endpoint})
   
 
   # user_data = <<-EOF
@@ -65,7 +65,7 @@ resource "aws_instance" "web2" {
     Name = "web2_instance"
   }
 
-  user_data = templatefile("./install.sh", {db_endpoint = data.aws_db_instance.project_db.endpoint})
+  user_data = templatefile("${path.module}/install.sh", {db_endpoint = data.aws_db_instance.project_db.endpoint})
 
   # user_data = <<-EOF
   #   #!/bin/bash
