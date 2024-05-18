@@ -3,7 +3,7 @@ data "aws_db_instance" "project_db" {
 }
 
 output  "db_endpoint" {
-  value = "aws_db_instance.project_db.id"
+  value = aws_db_instance.project_db.id
 }
 
 resource "aws_instance" "web1" {
