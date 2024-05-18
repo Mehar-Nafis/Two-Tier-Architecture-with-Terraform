@@ -1,3 +1,7 @@
+data "aws_db_instance" "project_db" {
+  db_instance_identifier = aws_db_instance.project_db.id
+}
+
 resource "aws_instance" "web1" {
   ami                         = "ami-09040d770ffe2224f"
   instance_type               = "t2.micro"
@@ -12,7 +16,7 @@ resource "aws_instance" "web1" {
     Name = "web1_instance"
   }
 
-  user_data = templatefile("./install.sh", {})
+  user_data = templatefile("./install.sh", {db_endpoint = data.aws_db_instance.project_db.endpoint})
   
 
   # user_data = <<-EOF
@@ -57,7 +61,7 @@ resource "aws_instance" "web2" {
     Name = "web2_instance"
   }
 
-  user_data = templatefile("./install.sh", {})
+  user_data = templatefile("./install.sh", {db_endpoint = data.aws_db_instance.project_db.endpoint})
 
   # user_data = <<-EOF
   #   #!/bin/bash
