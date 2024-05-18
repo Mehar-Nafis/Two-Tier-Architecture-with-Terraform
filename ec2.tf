@@ -1,9 +1,9 @@
 data "aws_db_instance" "project_db" {
-  db_instance_identifier = aws_db_instance.project_db.id
+  db_instance_identifier = aws_db_instance.project_db.identifier
 }
 
 output  "db_endpoint" {
-  value = aws_db_instance.project_db.id
+  value = aws_db_instance.project_db.endpoint
 }
 
 resource "aws_instance" "web1" {
