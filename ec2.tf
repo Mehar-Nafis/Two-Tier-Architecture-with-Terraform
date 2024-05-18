@@ -1,11 +1,3 @@
-data "aws_db_instance" "project_db" {
-  db_instance_identifier = aws_db_instance.project_db.identifier
-}
-
-output  "db_endpoint" {
-  value = aws_db_instance.project_db.endpoint
-}
-
 resource "aws_instance" "web1" {
   ami                         = "ami-09040d770ffe2224f"
   instance_type               = "t2.micro"
@@ -20,36 +12,33 @@ resource "aws_instance" "web1" {
     Name = "web1_instance"
   }
 
-  user_data = templatefile("${path.module}/install.sh", {db_endpoint = data.aws_db_instance.project_db.endpoint})
-  
-
-  # user_data = <<-EOF
-  #   #!/bin/bash
-  #   apt-get update
-  #   apt-get install -y apache2 php php-mysql
-  #   systemctl start apache2
-  #   systemctl enable apache2
+  user_data = <<-EOF
+    #!/bin/bash
+    apt-get update
+    apt-get install -y apache2 php php-mysql
+    systemctl start apache2
+    systemctl enable apache2
     
-  #   wget https://wordpress.org/latest.tar.gz
-  #   tar -xzf latest.tar.gz
-  #   cp -r wordpress/* /var/www/html/
+    wget https://wordpress.org/latest.tar.gz
+    tar -xzf latest.tar.gz
+    cp -r wordpress/* /var/www/html/
     
-  #   chown -R www-data:www-data /var/www/html/
+    chown -R www-data:www-data /var/www/html/
     
-  #   # Configure WordPress with RDS details
-  #   cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+    # Configure WordPress with RDS details
+    cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
     
-  #   DB_NAME="project_db"
-  #   DB_USER="admin"
-  #   DB_PASSWORD="password"
-  #   DB_HOST="${aws_db_instance.project_db.endpoint}"
+    DB_NAME="project_db"
+    DB_USER="admin"
+    DB_PASSWORD="password"
+    DB_HOST="${aws_db_instance.project_db.endpoint}"
     
-  #   sed -i "s/database_name_here/$DB_NAME/" /var/www/html/wp-config.php
-  #   sed -i "s/username_here/$DB_USER/" /var/www/html/wp-config.php
-  #   sed -i "s/password_here/$DB_PASSWORD/" /var/www/html/wp-config.php
-  #   sed -i "s/localhost/$DB_HOST/" /var/www/html/wp-config.php
-  #   sudo rm -rf /var/www/html/index.html
-  # EOF
+    sed -i "s/database_name_here/$DB_NAME/" /var/www/html/wp-config.php
+    sed -i "s/username_here/$DB_USER/" /var/www/html/wp-config.php
+    sed -i "s/password_here/$DB_PASSWORD/" /var/www/html/wp-config.php
+    sed -i "s/localhost/$DB_HOST/" /var/www/html/wp-config.php
+    sudo rm -rf /var/www/html/index.html
+  EOF
 }
 
 resource "aws_instance" "web2" {
@@ -65,35 +54,35 @@ resource "aws_instance" "web2" {
     Name = "web2_instance"
   }
 
-  user_data = templatefile("${path.module}/install.sh", {db_endpoint = data.aws_db_instance.project_db.endpoint})
+  
 
-  # user_data = <<-EOF
-  #   #!/bin/bash
-  #   apt-get update
-  #   apt-get install -y apache2 php php-mysql
-  #   systemctl start apache2
-  #   systemctl enable apache2
+  user_data = <<-EOF
+    #!/bin/bash
+    apt-get update
+    apt-get install -y apache2 php php-mysql
+    systemctl start apache2
+    systemctl enable apache2
     
-  #   wget https://wordpress.org/latest.tar.gz
-  #   tar -xzf latest.tar.gz
-  #   cp -r wordpress/* /var/www/html/
+    wget https://wordpress.org/latest.tar.gz
+    tar -xzf latest.tar.gz
+    cp -r wordpress/* /var/www/html/
     
-  #   chown -R www-data:www-data /var/www/html/
+    chown -R www-data:www-data /var/www/html/
     
-  #   # Configure WordPress with RDS details
-  #   cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+    # Configure WordPress with RDS details
+    cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
     
-  #   DB_NAME="project_db"
-  #   DB_USER="admin"
-  #   DB_PASSWORD="password"
-  #   DB_HOST="${aws_db_instance.project_db.endpoint}"
+    DB_NAME="project_db"
+    DB_USER="admin"
+    DB_PASSWORD="password"
+    DB_HOST="${aws_db_instance.project_db.endpoint}"
     
-  #   sed -i "s/database_name_here/$DB_NAME/" /var/www/html/wp-config.php
-  #   sed -i "s/username_here/$DB_USER/" /var/www/html/wp-config.php
-  #   sed -i "s/password_here/$DB_PASSWORD/" /var/www/html/wp-config.php
-  #   sed -i "s/localhost/$DB_HOST/" /var/www/html/wp-config.php
-  #   sudo rm -rf /var/www/html/index.html
-  # EOF
+    sed -i "s/database_name_here/$DB_NAME/" /var/www/html/wp-config.php
+    sed -i "s/username_here/$DB_USER/" /var/www/html/wp-config.php
+    sed -i "s/password_here/$DB_PASSWORD/" /var/www/html/wp-config.php
+    sed -i "s/localhost/$DB_HOST/" /var/www/html/wp-config.php
+    sudo rm -rf /var/www/html/index.html
+  EOF
 }
 
 output "web1_public_ip" {
