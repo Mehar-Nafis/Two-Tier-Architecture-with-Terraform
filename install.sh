@@ -1,4 +1,3 @@
- user_data = <<-EOF
     #!/bin/bash
     apt-get update
     apt-get install -y apache2 php php-mysql
@@ -24,4 +23,3 @@
     sed -i "s/password_here/$DB_PASSWORD/" /var/www/html/wp-config.php
     sed -i "s/localhost/$DB_HOST/" /var/www/html/wp-config.php
     sudo rm -rf /var/www/html/index.html
-  EOF
