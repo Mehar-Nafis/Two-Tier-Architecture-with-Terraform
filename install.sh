@@ -16,7 +16,7 @@
     DB_NAME="project_db"
     DB_USER="admin"
     DB_PASSWORD="password"
-    DB_HOST="${aws_db_instance.project_db.endpoint}"
+    DB_HOST="${db_endpoint}"
     
     sed -i "s/database_name_here/$DB_NAME/" /var/www/html/wp-config.php
     sed -i "s/username_here/$DB_USER/" /var/www/html/wp-config.php
