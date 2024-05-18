@@ -2,6 +2,10 @@ data "aws_db_instance" "project_db" {
   db_instance_identifier = aws_db_instance.project_db.id
 }
 
+output  "db_endpoint" {
+  value = "aws_db_instance.project_db.id"
+}
+
 resource "aws_instance" "web1" {
   ami                         = "ami-09040d770ffe2224f"
   instance_type               = "t2.micro"
