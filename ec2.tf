@@ -12,7 +12,7 @@ resource "aws_instance" "web1" {
     Name = "web1_instance"
   }
 
-  user_data = templatefile("C:\\Users\\MeharNafis\\OneDrive - CloudThat\\Desktop\\DevOps\\Terraform\\Terraform Labs\\Two-Tier-Architecture-with-Terraform\\install.sh", {})
+  user_data = templatefile("./install.sh", {})
   
 
   # user_data = <<-EOF
@@ -57,7 +57,7 @@ resource "aws_instance" "web2" {
     Name = "web2_instance"
   }
 
-  user_data = templatefile("${path.module}\\install.sh", {})
+  user_data = templatefile("./install.sh", {})
 
   # user_data = <<-EOF
   #   #!/bin/bash
