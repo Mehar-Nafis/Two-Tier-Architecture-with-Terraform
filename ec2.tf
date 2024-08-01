@@ -1,6 +1,6 @@
 resource "aws_instance" "web1" {
   ami                         = "ami-09040d770ffe2224f"
-  instance_type               = "t2.micro"
+  instance_type               = "t2.medium"
   key_name                    = "two-tier-public-key"
   depends_on                  = [aws_key_pair.two-tier-public-key, aws_db_instance.project_db]
   availability_zone           = "us-east-2a"
