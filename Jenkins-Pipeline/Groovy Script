@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+    
+    environment {
+        GIT_CREDENTIALS_ID = 'GITHUB'
+    }
+    
+    tools {
+        terraform 'Terraform'
+    }
+    
+    triggers {
+        githubPush()
+    }
+
+    stages {
+        stage('Checkout from GitHub') {
+            steps {
+              git branch: 'main', credentialsId: 'GITHUB', url: 'https://github.com/Mehar-Nafis/Two-Tier-Architecture-with-Terraform.git'    
+              //checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Mehar-Nafis/Two-Tier-Architecture-with-Terraform.git']])
+            }
+        }
+        
+        stage ('init'){
+          steps {
+              sh ('terraform init')
+          }  
+        }
+        
+        stage ('plan'){
+          steps {
+              sh ('terraform plan')
+          }
+        }
+        
+        stage ('apply'){
+          steps {
+              sh ('terraform apply --auto-approve')
+          }
+        }
+        
+        // stage ('destroy'){
+        //   steps {
+        //             // List files in the workspace to verify terraform.tfstate exists
+        //             sh ('terraform destroy --auto-approve')
+        //         }
+        // }
+    }
+}
